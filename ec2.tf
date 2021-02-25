@@ -1,7 +1,18 @@
-resource "aws_security_group" "allow_tls" {
-  name        = "allow_tls"
+resource "aws_security_group" "std_ec2" {
+  name        = "std_ec2"
   description = "Allow TLS inbound traffic"
   # vpc_id      = aws_vpc.main.id
+
+  dynamic "ingress" {
+    iterator = port
+    for_each = var.open_ports
+    content {
+      from_port        = port.value
+      to_port          = port.value
+      protocol         = "tcp"
+      ipv6_cidr_blocks = ["::/0"]
+    }
+  }
 
   dynamic "ingress" {
     iterator = port
@@ -10,7 +21,7 @@ resource "aws_security_group" "allow_tls" {
       from_port   = port.value
       to_port     = port.value
       protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0", "::/0"]
+      cidr_blocks = ["0.0.0.0/0"]
     }
   }
 
@@ -20,14 +31,10 @@ resource "aws_security_group" "allow_tls" {
     protocol    = "-1" # ie "all"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = {
-    Name = "allow_tls"
-  }
 }
 
 resource "aws_instance" "example" {
-  ami             = "ami-08b6d44b4f6f7b279"
-  instance_type   = "t2.micro"
-  security_groups = ["aws_security_group.allow_tls"]
+  ami                    = "ami-08b6d44b4f6f7b279"
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.std_ec2.id]
 }

@@ -17,11 +17,6 @@ terraform {
 }
 
 provider "aws" {
-  profile = "alaux"
+  profile = "shop"
   region  = "eu-central-1"
-  assume_role {
-    role_arn     = "arn:aws:iam::123456789012:role/external-user"
-    session_name = "terraform"
-    # external_id  = "EXTERNAL_ID"
-  }
 }
