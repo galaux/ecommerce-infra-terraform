@@ -5,23 +5,23 @@ resource "aws_security_group" "std_ec2" {
 
   dynamic "ingress" {
     iterator = port
-    for_each = var.open_ports
-    content {
-      from_port        = port.value
-      to_port          = port.value
-      protocol         = "tcp"
-      ipv6_cidr_blocks = ["::/0"]
-    }
-  }
-
-  dynamic "ingress" {
-    iterator = port
-    for_each = var.open_ports
+    for_each = var.open_ports_ipv4
     content {
       from_port   = port.value
       to_port     = port.value
       protocol    = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
+
+  dynamic "ingress" {
+    iterator = port
+    for_each = var.open_ports_ipv6
+    content {
+      from_port        = port.value
+      to_port          = port.value
+      protocol         = "tcp"
+      ipv6_cidr_blocks = ["::/0"]
     }
   }
 
@@ -37,4 +37,5 @@ resource "aws_instance" "example" {
   ami                    = "ami-08b6d44b4f6f7b279"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.std_ec2.id]
+  key_name               = "example-test"
 }

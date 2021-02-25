@@ -8,3 +8,8 @@
 #   value       = aws_instance.example.public_ip
 # }
 
+output "s3_std_backup_test_id" {
+  description = "ID of the bucket where the example Prestashop data is saved"
+  value       = aws_s3_bucket.std_backup_test.id
+}
+

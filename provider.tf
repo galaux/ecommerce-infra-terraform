@@ -17,6 +17,8 @@ terraform {
 }
 
 provider "aws" {
-  profile = "shop"
-  region  = "eu-central-1"
+  # profile = "shop"
+  profile = "shop-test"
+  # profile = "123456789012_AdministratorAccess"
+  region = "eu-central-1"
 }

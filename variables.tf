@@ -4,9 +4,8 @@
 #   default     = "ExampleInstance"
 # }
 
-variable "open_ports" {
-  description = "TODO"
-  type        = list(string)
+variable "open_ports_ipv4" {
+  type = list(string)
   default = [
     "21",
     "22",
@@ -14,5 +13,13 @@ variable "open_ports" {
     "80",
     "443",
     "22"
+  ]
+}
+
+variable "open_ports_ipv6" {
+  type = list(string)
+  default = [
+    "80",
+    "443"
   ]
 }
