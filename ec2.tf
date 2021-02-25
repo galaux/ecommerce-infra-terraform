@@ -5,40 +5,13 @@ resource "aws_security_group" "allow_tls" {
 
   # ingress
   ingress {
-    from_port   = 21
-    to_port     = 21
+    for_each = toset(var.open_ports)
+
+    from_port   = each.key
+    to_port     = each.key
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0", "::/0"]
   }
-
-  # ingress
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0", "::/0"]
-  }
-
-  ingress {
-    from_port   = 25
-    to_port     = 25
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0", "::/0"]
-  }
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0", "::/0"]
-  }
-
-  # ingress {
-  #   from_port   = 22
-  #   to_port     = 22
-  #   protocol    = "tcp"
-  #   cidr_blocks = [aws_vpc.main.cidr_block]
-  # }
 
   # egress
   egress {
@@ -59,6 +32,6 @@ resource "aws_instance" "example" {
   security_groups = ["aws_security_group.allow_tls"]
 
   tags = {
-    Name = var.instance_name
+    Name = var.list
   }
 }
