@@ -40,3 +40,8 @@ resource "aws_instance" "std_ec2" {
   key_name               = "example-test"
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
 }
+
+resource "aws_eip" "std_ec2" {
+  instance = aws_instance.std_ec2.id
+  vpc      = true
+}
