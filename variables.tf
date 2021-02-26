@@ -23,3 +23,13 @@ variable "open_ports_ipv6" {
     "443"
   ]
 }
+
+variable "sub_domains" {
+  type = list(string)
+  default = [
+    "admin",
+    "blog",
+    "www"
+  ]
+}
+

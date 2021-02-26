@@ -41,6 +41,10 @@ resource "aws_instance" "std_ec2" {
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
 }
 
+# We might want to avoid having an EIP for test instances as these must be paid
+# for if not assigned to a running instance. For test instances, we might want
+# to directly have the DNS records point at the EC2 instance public IP.
+# TODO maybe don't use an EIP for test instances
 resource "aws_eip" "std_ec2" {
   instance = aws_instance.std_ec2.id
   vpc      = true
