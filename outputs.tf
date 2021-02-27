@@ -33,3 +33,7 @@ output "std_ec2_public_dns" {
 #   value       = aws_s3_bucket.std_backup_test.id
 # }
 
+output "smtp_password" {
+  description = "Password for the SES SMTP allowed user"
+  value       = aws_iam_access_key.ses_smtp.ses_smtp_password_v4
+}

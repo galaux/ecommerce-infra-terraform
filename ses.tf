@@ -73,3 +73,28 @@ resource "aws_ses_domain_dkim" "std_tk" {
 #   ttl     = "600"
 #   records = ["${element(aws_ses_domain_dkim.std_tk.dkim_tokens, count.index)}.dkim.amazonses.com"]
 # }
+
+resource "aws_iam_user" "ses_smtp" {
+  name = "ses-smtp"
+}
+
+resource "aws_iam_user_policy" "ses_smtp" {
+  name   = "AmazonSesSendingAccess"
+  user   = aws_iam_user.ses_smtp.name
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "ses:SendRawEmail",
+            "Resource": "*"
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_iam_access_key" "ses_smtp" {
+  user = aws_iam_user.ses_smtp.name
+}
