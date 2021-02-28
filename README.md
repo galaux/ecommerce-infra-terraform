@@ -1,13 +1,5 @@
 # example Terraform
 
-## TODO
-
-- EC2
-- IAM
-- VPC
-- DNS
-- SES
-
 ## Notes on using different AWS accounts for `test` and `prod`
 
 I've managed to set it up but this complexifies the handling of DNS entries
@@ -48,3 +40,7 @@ this role.
 
 Watch-out: each "account" created must be associated with a credit card number
 and a phone number before it can be deleted.
+
+Last note: I'm not sure I even need to have SSO setup. I can create sub-privs
+accounts for `shop-test` and `shop-prod` as well as external admin
+role that I give to my guillaume@alaux account.
