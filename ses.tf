@@ -40,14 +40,15 @@ resource "aws_route53_record" "std_tk_spf" {
   records = ["v=spf1 ip4:${aws_instance.std_ec2.public_ip} ~all"]
 }
 
-# # DMARC
-# resource "aws_route53_record" "std_tk_dmarc" {
-#   zone_id = aws_route53_zone.std_tk.zone_id
-#   name    = "_dmarc.example.tk"
-#   type    = "TXT"
-#   ttl     = "600"
-#   records = ["v=DMARC1; p=none; rua=mailto:dmarcreports-shop@alaux.net,mailto:owner@example.com; ruf=mailto:dmarcreports-shop@alaux.net,mailto:owner@example.com; fo=1;"]
-# }
+
+# DMARC record
+resource "aws_route53_record" "std_tk_dmarc" {
+  zone_id = aws_route53_zone.std_tk.zone_id
+  name    = "_dmarc.example.tk"
+  type    = "TXT"
+  ttl     = "600"
+  records = ["v=DMARC1; p=none; rua=mailto:dmarcreports-shop@alaux.net,mailto:owner@example.com; ruf=mailto:dmarcreports-shop@alaux.net,mailto:owner@example.com; fo=1;"]
+}
 
 
 # MX record
