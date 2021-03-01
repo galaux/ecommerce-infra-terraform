@@ -37,7 +37,7 @@ resource "aws_route53_record" "std_tk_spf" {
   name    = "example.tk"
   type    = "TXT"
   ttl     = "600"
-  records = ["v=spf1 ip4:${aws_instance.std_ec2.public_ip} ~all"]
+  records = ["v=spf1 ip4:${local.ec2_std_ip} ~all"]
 }
 
 

@@ -8,25 +8,13 @@ output "std_tk_delegation_set_name_servers" {
 #   value       = aws_route53_zone.std_tk.zone_id
 # }
 
-output "std_ec2_eip" {
-  description = "Elastic IP of the example EC2 instance"
-  value       = aws_eip.std_ec2.public_ip
+output "ec2_std_ip" {
+  value = local.ec2_std_ip
 }
 
-output "std_ec2_public_dns" {
-  description = "Elastic IP of the example EC2 instance"
-  value       = aws_eip.std_ec2.public_dns
+output "ec2_std_dns" {
+  value = local.ec2_std_dns
 }
-
-# output "instance_id" {
-#   description = "ID of the EC2 instance"
-#   value       = aws_instance.std_ec2.id
-# }
-
-# output "instance_public_ip" {
-#   description = "Public IP address of the EC2 instance"
-#   value       = aws_instance.std_ec2.public_ip
-# }
 
 # output "s3_std_backup_test_id" {
 #   description = "ID of the bucket where the example Prestashop data is saved"

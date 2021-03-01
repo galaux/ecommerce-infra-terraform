@@ -28,7 +28,7 @@ resource "aws_route53_record" "std_tk" {
   name    = "example.tk"
   type    = "A"
   ttl     = "300"
-  records = [aws_eip.std_ec2.public_ip]
+  records = [local.ec2_std_ip]
 }
 
 resource "aws_route53_record" "std_tk_" {
@@ -37,5 +37,5 @@ resource "aws_route53_record" "std_tk_" {
   name     = "${each.key}.example.tk"
   type     = "A"
   ttl      = "300"
-  records  = [aws_eip.std_ec2.public_ip]
+  records  = [local.ec2_std_ip]
 }
