@@ -1,3 +1,8 @@
+variable "name" {
+  type = string
+  # default = ""
+}
+
 variable "test_environment" {
   type    = bool
   default = true

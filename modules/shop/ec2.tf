@@ -39,6 +39,10 @@ resource "aws_instance" "std_ec2" {
   vpc_security_group_ids = [aws_security_group.std_ec2.id]
   key_name               = "example-test"
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
+
+  tags = {
+    Name = var.name
+  }
 }
 
 # We might want to avoid having an EIP for test instances as these must be paid
