@@ -22,13 +22,13 @@ resource "aws_route53_record" "std_tk_ses_verification_record" {
   records = [aws_ses_domain_identity.std_tk.verification_token]
 }
 
-# As the name suggest, this must start the domain verification process though
-# this process seems to be automatically started when the
-# `aws_ses_domain_identity` is created. Let's have it anyway.
-resource "aws_ses_domain_identity_verification" "std_tk_ses_verification" {
-  domain     = aws_ses_domain_identity.std_tk.id
-  depends_on = [aws_route53_record.std_tk_ses_verification_record]
-}
+# # As the name suggest, this must start the domain verification process though
+# # this process seems to be automatically started when the
+# # `aws_ses_domain_identity` is created. Let's have it anyway.
+# resource "aws_ses_domain_identity_verification" "std_tk_ses_verification" {
+#   domain     = aws_ses_domain_identity.std_tk.id
+#   depends_on = [aws_route53_record.std_tk_ses_verification_record]
+# }
 
 
 # SPF record
