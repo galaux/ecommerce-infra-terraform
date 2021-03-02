@@ -1,3 +1,10 @@
+provider "aws" {
+  # profile = "shop"
+  profile = "shop-test"
+  # profile = "123456789012_AdministratorAccess"
+  region = "eu-central-1"
+}
+
 terraform {
 
   # backend "remote" {
@@ -7,6 +14,15 @@ terraform {
   #   }
   # }
 
+  backend "s3" {
+    bucket  = "shop-tfstate-test"
+    key     = "tk/terraform.tfstate"
+    region  = "eu-central-1"
+    profile = "shop-test"
+    # dynamodb_table = "terraform"
+    # encrypt        = true
+  }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -14,13 +30,6 @@ terraform {
     }
   }
 
-}
-
-provider "aws" {
-  # profile = "shop"
-  profile = "shop-test"
-  # profile = "123456789012_AdministratorAccess"
-  region = "eu-central-1"
 }
 
 module "shop" {
