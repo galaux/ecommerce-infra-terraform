@@ -15,7 +15,7 @@ resource "aws_ses_domain_identity" "std_tk" {
 
 # SES verification record (`_amazonses`)
 resource "aws_route53_record" "std_tk_ses_verification_record" {
-  zone_id = aws_route53_zone.std_tk.zone_id
+  zone_id = var.dns_zone_id
   name    = "_amazonses.example.tk"
   type    = "TXT"
   ttl     = "1800"
@@ -33,7 +33,7 @@ resource "aws_route53_record" "std_tk_ses_verification_record" {
 
 # SPF record
 resource "aws_route53_record" "std_tk_spf" {
-  zone_id = aws_route53_zone.std_tk.zone_id
+  zone_id = var.dns_zone_id
   name    = "example.tk"
   type    = "TXT"
   ttl     = "600"
@@ -43,7 +43,7 @@ resource "aws_route53_record" "std_tk_spf" {
 
 # DMARC record
 resource "aws_route53_record" "std_tk_dmarc" {
-  zone_id = aws_route53_zone.std_tk.zone_id
+  zone_id = var.dns_zone_id
   name    = "_dmarc.example.tk"
   type    = "TXT"
   ttl     = "600"
@@ -53,7 +53,7 @@ resource "aws_route53_record" "std_tk_dmarc" {
 
 # MX record
 resource "aws_route53_record" "std_tk_mx" {
-  zone_id = aws_route53_zone.std_tk.zone_id
+  zone_id = var.dns_zone_id
   name    = "example.tk"
   type    = "MX"
   ttl     = "600"
@@ -73,7 +73,7 @@ resource "aws_ses_domain_dkim" "std_tk" {
 
 resource "aws_route53_record" "example_amazonses_dkim_record" {
   count   = 3
-  zone_id = aws_route53_zone.std_tk.zone_id
+  zone_id = var.dns_zone_id
   name    = "${element(aws_ses_domain_dkim.std_tk.dkim_tokens, count.index)}._domainkey"
   type    = "CNAME"
   ttl     = "600"

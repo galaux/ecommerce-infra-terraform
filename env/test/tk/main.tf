@@ -32,13 +32,26 @@ terraform {
 
 }
 
+# read remote state
+data "terraform_remote_state" "base" {
+  backend = "s3"
+
+  config = {
+    bucket  = "shop-tfstate-test"
+    key     = "tk/terraform.tfstate"
+    region  = "eu-central-1"
+    profile = "shop-test"
+  }
+}
+
+module "base" {
+  source = "../../../modules/base"
+}
+
 module "shop" {
   source = "../../../modules/shop"
 
-  name = var.name
-
-  # cidr = "${var.cidr}"
-  # azs = "${var.azs}"
-  # public_subnets = "${var.public_subnets}"
+  name        = var.name
+  dns_zone_id = data.terraform_remote_state.base.outputs.dns_zone_id
 }
 
