@@ -1,7 +1,7 @@
 # SPF record
 resource "aws_route53_record" "spf" {
   zone_id = var.dns_zone_id
-  name    = "example.tk"
+  name    = var.parent_domain
   type    = "TXT"
   ttl     = "600"
   records = ["v=spf1 ip4:${local.instance_ip} ~all"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "spf" {
 # DMARC record
 resource "aws_route53_record" "dmarc" {
   zone_id = var.dns_zone_id
-  name    = "_dmarc.example.tk"
+  name    = "_dmarc.${var.parent_domain}"
   type    = "TXT"
   ttl     = "600"
   records = ["v=DMARC1; p=none; rua=mailto:dmarcreports-shop@alaux.net,mailto:owner@example.com; ruf=mailto:dmarcreports-shop@alaux.net,mailto:owner@example.com; fo=1;"]
@@ -19,10 +19,10 @@ resource "aws_route53_record" "dmarc" {
 # MX record
 resource "aws_route53_record" "mx" {
   zone_id = var.dns_zone_id
-  name    = "example.tk"
+  name    = var.parent_domain
   type    = "MX"
   ttl     = "600"
-  records = ["1 example.tk."]
+  records = ["1 ${var.parent_domain}."]
 }
 
 # DKIM records

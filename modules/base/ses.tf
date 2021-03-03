@@ -1,4 +1,4 @@
-# This resource creates the example.??? entry in SES "domain entities"
+# This resource creates the example.xyz entry in SES "domain entities"
 # which automatically starts the AWS verification process. During this process
 # period (which took less than 5' in effect but can take quite some time in
 # theory), SES field "Verification" is set to "pending verification" then when

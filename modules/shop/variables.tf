@@ -38,6 +38,11 @@ variable "open_ports_ipv6" {
   ]
 }
 
+variable "parent_domain" {
+  type        = string
+  description = "Parent domain name (\"example.xyz\")"
+}
+
 variable "sub_domains" {
   type = list(string)
   default = [

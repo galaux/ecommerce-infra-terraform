@@ -5,7 +5,7 @@ variable "name" {
 
 variable "parent_domain" {
   type        = string
-  description = "Parent domain name (\"example.???\")"
+  description = "Parent domain name (\"example.xyz\")"
 }
 
 variable "public_key" {
