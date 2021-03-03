@@ -1,17 +1,17 @@
-# This resource creates the example.tk entry in SES "domain entities"
+# This resource creates the example.??? entry in SES "domain entities"
 # which automatically starts the AWS verification process. During this process
 # period (which took less than 5' in effect but can take quite some time in
 # theory), SES field "Verification" is set to "pending verification" then when
 # done to "verified".
 resource "aws_ses_domain_identity" "std_tk" {
-  domain = "example.tk"
+  domain = var.parent_domain
 }
 
 
 # SES verification record (`_amazonses`)
 resource "aws_route53_record" "std_tk_ses_verification_record" {
   zone_id = aws_route53_zone.std_tk.zone_id
-  name    = "_amazonses.example.tk"
+  name    = "_amazonses.${var.parent_domain}"
   type    = "TXT"
   ttl     = "1800"
   records = [aws_ses_domain_identity.std_tk.verification_token]

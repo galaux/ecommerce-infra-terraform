@@ -1,7 +1,11 @@
 variable "name" {
   type        = string
   description = "Name to be used on all the resources as identifier"
-  default     = ""
+}
+
+variable "parent_domain" {
+  type        = string
+  description = "Parent domain name (\"example.???\")"
 }
 
 variable "public_key" {

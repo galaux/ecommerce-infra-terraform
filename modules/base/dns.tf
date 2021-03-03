@@ -18,7 +18,7 @@ resource "aws_route53_delegation_set" "main" {
 }
 
 resource "aws_route53_zone" "std_tk" {
-  name              = "example.tk"
+  name              = var.parent_domain
   delegation_set_id = aws_route53_delegation_set.main.id
 }
 

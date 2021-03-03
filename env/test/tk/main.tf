@@ -47,7 +47,8 @@ data "terraform_remote_state" "base" {
 module "base" {
   source = "../../../modules/base"
 
-  public_key = var.public_key
+  parent_domain = var.parent_domain
+  public_key    = var.public_key
 }
 
 module "shop" {
