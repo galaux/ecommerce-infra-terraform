@@ -13,7 +13,8 @@ resource "aws_route53_record" "dmarc" {
   name    = "_dmarc.${var.parent_domain}"
   type    = "TXT"
   ttl     = "600"
-  records = ["v=DMARC1; p=none; rua=mailto:dmarcreports-shop@alaux.net,mailto:owner@example.com; ruf=mailto:dmarcreports-shop@alaux.net,mailto:owner@example.com; fo=1;"]
+  # FIXME factorize this
+  records = ["v=DMARC1; p=none; rua=mailto:dmarcreports+${var.parent_domain}@alaux.net,mailto:owner+${var.parent_domain}@gmail.com; ruf=mailto:dmarcreports+${var.parent_domain}@alaux.net,mailto:owner+${var.parent_domain}@gmail.com; fo=1;"]
 }
 
 # MX record
