@@ -65,7 +65,7 @@ It seems one can start/stop an EC2 instance using the `local-exec` provider:
 ```
 resource "null_resource" "osef" {
   provisioner "local-exec" {
-    command = "echo ${aws_instance.std_ec2.private_ip} >> private_ips.txt"
+    command = "echo ${aws_instance.main.private_ip} >> private_ips.txt"
   }
 }
 ```

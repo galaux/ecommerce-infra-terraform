@@ -9,8 +9,8 @@
 # [0]: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-metadata.html
 
 
-resource "aws_iam_role" "std_ec2" {
-  name = "shop-ec2"
+resource "aws_iam_role" "ec2_assume" {
+  name = "${var.name}-ec2-assume"
   assume_role_policy = jsonencode({
     Version : "2012-10-17",
     Statement : [
@@ -26,9 +26,9 @@ resource "aws_iam_role" "std_ec2" {
   })
 }
 
-resource "aws_iam_policy" "std_s3_policy" {
-  name        = "shop-s3-bucket"
-  description = "Allow access to the example backup S3 bucket"
+resource "aws_iam_policy" "s3_bucket_access" {
+  name        = "${var.name}-s3-bucket-access"
+  description = "Allow access to the backup S3 bucket"
   # TODO tame down S3 privs to the strict minimum
   policy = jsonencode({
     Version : "2012-10-17",
@@ -45,13 +45,13 @@ resource "aws_iam_policy" "std_s3_policy" {
   })
 }
 
-resource "aws_iam_policy_attachment" "attach_s3_policy_ec2_std" {
-  name       = "attach-s3-policy-ec2-shop"
-  roles      = [aws_iam_role.std_ec2.name]
-  policy_arn = aws_iam_policy.std_s3_policy.arn
+resource "aws_iam_policy_attachment" "attach_s3_policy_ec2" {
+  name       = "${var.name}-attach-s3-policy-ec2"
+  roles      = [aws_iam_role.ec2_assume.name]
+  policy_arn = aws_iam_policy.s3_bucket_access.arn
 }
 
 resource "aws_iam_instance_profile" "ec2_profile" {
-  name = "ec2-profile"
-  role = aws_iam_role.std_ec2.name
+  name = "${var.name}-ec2-profile"
+  role = aws_iam_role.ec2_assume.name
 }

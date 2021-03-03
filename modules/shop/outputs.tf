@@ -1,9 +1,5 @@
-output "ec2_std_ip" {
-  value = local.ec2_std_ip
-}
-
-output "ec2_std_dns" {
-  value = local.ec2_std_dns
+output "instance_dns" {
+  value = local.instance_dns
 }
 
 output "smtp_password" {

@@ -1,14 +1,14 @@
 # SPF record
-resource "aws_route53_record" "std_tk_spf" {
+resource "aws_route53_record" "spf" {
   zone_id = var.dns_zone_id
   name    = "example.tk"
   type    = "TXT"
   ttl     = "600"
-  records = ["v=spf1 ip4:${local.ec2_std_ip} ~all"]
+  records = ["v=spf1 ip4:${local.instance_ip} ~all"]
 }
 
 # DMARC record
-resource "aws_route53_record" "std_tk_dmarc" {
+resource "aws_route53_record" "dmarc" {
   zone_id = var.dns_zone_id
   name    = "_dmarc.example.tk"
   type    = "TXT"
@@ -17,7 +17,7 @@ resource "aws_route53_record" "std_tk_dmarc" {
 }
 
 # MX record
-resource "aws_route53_record" "std_tk_mx" {
+resource "aws_route53_record" "mx" {
   zone_id = var.dns_zone_id
   name    = "example.tk"
   type    = "MX"

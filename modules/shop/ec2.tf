@@ -1,5 +1,5 @@
-resource "aws_security_group" "std_ec2" {
-  name        = "std_ec2"
+resource "aws_security_group" "main" {
+  name        = var.name
   description = "Allow TLS inbound traffic"
   # vpc_id      = aws_vpc.main.id
 
@@ -33,10 +33,10 @@ resource "aws_security_group" "std_ec2" {
   }
 }
 
-resource "aws_instance" "std_ec2" {
+resource "aws_instance" "main" {
   ami                    = "ami-08b6d44b4f6f7b279"
   instance_type          = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.std_ec2.id]
+  vpc_security_group_ids = [aws_security_group.main.id]
   key_name               = "tk" # FIXME
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
 
@@ -48,9 +48,9 @@ resource "aws_instance" "std_ec2" {
 # We refrain from using an EIP for test instances as these must be paid for if
 # not assigned to a running instance. For test instances, we thus have the DNS
 # records point at the EC2 instance public IP directly.
-resource "aws_eip" "std_ec2" {
+resource "aws_eip" "instance" {
   count    = var.test_environment ? 0 : 1
-  instance = aws_instance.std_ec2.id
+  instance = aws_instance.main.id
   vpc      = true
 }
 
@@ -64,7 +64,7 @@ locals {
   # of the EC2 instance whether we are in test or not.
   #
   # [0]: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#public_ip
-  ec2_std_ip  = var.test_environment ? aws_instance.std_ec2.public_ip : aws_eip.std_ec2[0].public_ip
-  ec2_std_dns = var.test_environment ? aws_instance.std_ec2.public_dns : aws_eip.std_ec2[0].public_dns
+  instance_ip  = var.test_environment ? aws_instance.main.public_ip : aws_eip.instance[0].public_ip
+  instance_dns = var.test_environment ? aws_instance.main.public_dns : aws_eip.instance[0].public_dns
 }
 
