@@ -12,11 +12,17 @@ variable "dns_zone_id" {
   type = string
 }
 
-# variable "instance_name" {
-#   description = "Value of the Name tag for the EC2 instance"
-#   type        = string
-#   default     = "ExampleInstance"
-# }
+variable "ami" {
+  type        = string
+  description = "EC2 AMI identifier"
+  default     = "ami-08b6d44b4f6f7b279"
+}
+
+variable "instance_type" {
+  type        = string
+  description = "EC2 instance type (\"t2.micro\", …)"
+  default     = "t2.micro"
+}
 
 variable "open_ports_ipv4" {
   type = list(string)
