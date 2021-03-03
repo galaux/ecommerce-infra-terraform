@@ -26,7 +26,7 @@ resource "aws_route53_record" "mx" {
 }
 
 # DKIM records
-resource "aws_route53_record" "example_amazonses_dkim_record" {
+resource "aws_route53_record" "dkim" {
   count   = 3
   zone_id = var.dns_zone_id
   name    = "${element(var.dkim_tokens, count.index)}._domainkey"
