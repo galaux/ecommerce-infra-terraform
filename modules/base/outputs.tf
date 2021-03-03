@@ -7,3 +7,8 @@ output "dns_zone_id" {
   description = "ID of the DNS zone"
   value       = aws_route53_zone.std_tk.zone_id
 }
+
+output "dkim_tokens" {
+  description = "Generated DKIM tokens"
+  value       = aws_ses_domain_dkim.std_tk.dkim_tokens
+}

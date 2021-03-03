@@ -47,3 +47,8 @@ variable "sub_domains" {
   ]
 }
 
+variable "dkim_tokens" {
+  description = "Generated DKIM tokens"
+  type        = list(string)
+}
+

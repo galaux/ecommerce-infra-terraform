@@ -10,7 +10,6 @@
 # As this resource has a `prevent_destroy`, it complicates the removal of other
 # resources in the same directory. It should be moved to some other folder
 # along with more _long term_ resources (such as the EC2 key pair, …)
-# FIXME move this resource out of this folder
 resource "aws_route53_delegation_set" "main" {
   reference_name = "Freenom"
   lifecycle {
