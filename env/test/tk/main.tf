@@ -55,7 +55,8 @@ module "base" {
 module "shop" {
   source = "../../../modules/shop"
 
-  name        = var.name
-  dns_zone_id = data.terraform_remote_state.base.outputs.dns_zone_id
-  dkim_tokens = data.terraform_remote_state.base.outputs.dkim_tokens
+  name              = var.name
+  dns_zone_id       = data.terraform_remote_state.base.outputs.dns_zone_id
+  dkim_tokens       = data.terraform_remote_state.base.outputs.dkim_tokens
+  backup_bucket_arn = data.terraform_remote_state.base.outputs.backup_bucket_arn
 }

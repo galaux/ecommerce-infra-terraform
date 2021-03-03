@@ -37,8 +37,8 @@ resource "aws_iam_policy" "std_s3_policy" {
         Effect : "Allow",
         Action : "s3:*",
         Resource : [
-          aws_s3_bucket.std_backup_test.arn,
-          "${aws_s3_bucket.std_backup_test.arn}/*"
+          var.backup_bucket_arn,
+          "${var.backup_bucket_arn}/*"
         ]
       }
     ]

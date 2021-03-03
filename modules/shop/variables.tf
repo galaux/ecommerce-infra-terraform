@@ -52,3 +52,8 @@ variable "dkim_tokens" {
   type        = list(string)
 }
 
+variable "backup_bucket_arn" {
+  type        = string
+  description = "ARN of the bucket where the backup files are stored"
+}
+

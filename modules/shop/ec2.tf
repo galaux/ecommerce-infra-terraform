@@ -37,7 +37,7 @@ resource "aws_instance" "std_ec2" {
   ami                    = "ami-08b6d44b4f6f7b279"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.std_ec2.id]
-  key_name               = "example-test"
+  key_name               = "tk" # FIXME
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
 
   tags = {

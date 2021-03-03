@@ -12,3 +12,8 @@ output "dkim_tokens" {
   description = "Generated DKIM tokens"
   value       = module.base.dkim_tokens
 }
+
+output "backup_bucket_arn" {
+  description = "ARN of the bucket where the backup files are stored"
+  value       = module.base.backup_bucket_arn
+}
