@@ -45,10 +45,9 @@ resource "aws_instance" "std_ec2" {
   }
 }
 
-# We might want to avoid having an EIP for test instances as these must be paid
-# for if not assigned to a running instance. For test instances, we might want
-# to directly have the DNS records point at the EC2 instance public IP.
-# TODO maybe don't use an EIP for test instances
+# We refrain from using an EIP for test instances as these must be paid for if
+# not assigned to a running instance. For test instances, we thus have the DNS
+# records point at the EC2 instance public IP directly.
 resource "aws_eip" "std_ec2" {
   count    = var.test_environment ? 0 : 1
   instance = aws_instance.std_ec2.id
