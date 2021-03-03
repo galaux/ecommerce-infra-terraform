@@ -100,6 +100,51 @@ such as I was hoping GDB could use.
   - dns_zone
   - …
 
+### In prod
+
+#### To import
+
+- `data.terraform_remote_state.base`
+- `module.base.aws_key_pair.main`
+- `module.base.aws_route53_record.ses_verification_record`
+- `module.base.aws_s3_bucket.backup`
+- `module.base.aws_ses_domain_dkim.main`
+- `module.base.aws_ses_domain_identity.main`
+- `module.shop.aws_iam_access_key.ses_smtp`
+- `module.shop.aws_iam_instance_profile.ec2_profile`
+- `module.shop.aws_iam_policy.s3_bucket_access`
+- `module.shop.aws_iam_policy_attachment.attach_s3_policy_ec2`
+- `module.shop.aws_iam_role.ec2_assume`
+- `module.shop.aws_iam_user.ses_smtp`
+- `module.shop.aws_iam_user_policy.ses_smtp`
+- `module.shop.aws_instance.main`
+- `module.shop.aws_route53_record.dkim[0]`
+- `module.shop.aws_route53_record.dkim[1]`
+- `module.shop.aws_route53_record.dkim[2]`
+- `module.shop.aws_route53_record.dmarc`
+- `module.shop.aws_route53_record.mx`
+- `module.shop.aws_route53_record.parent_domain`
+- `module.shop.aws_route53_record.spf`
+- `module.shop.aws_route53_record.sub_domain["admin"]`
+- `module.shop.aws_route53_record.sub_domain["blog"]`
+- `module.shop.aws_route53_record.sub_domain["www"]`
+- `module.shop.aws_security_group.main`
+
+#### To create with `terraform apply`
+
+- `module.base.aws_route53_delegation_set.main`
+
+#### To add to Terraform and create
+
+- `zone_id` for example.fr and shop.company
+
+#### Imported
+
+- `module.base.aws_route53_zone.main`
+
+
+## Misc
+
 ```
 aws \
   --profile=shop-test \
