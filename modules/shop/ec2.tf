@@ -37,7 +37,7 @@ resource "aws_instance" "main" {
   ami                    = "ami-08b6d44b4f6f7b279"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.main.id]
-  key_name               = "tk" # FIXME
+  key_name               = var.name
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
 
   tags = {
