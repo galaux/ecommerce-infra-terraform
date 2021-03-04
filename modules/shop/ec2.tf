@@ -49,7 +49,7 @@ resource "aws_instance" "main" {
 # not assigned to a running instance. For test instances, we thus have the DNS
 # records point at the EC2 instance public IP directly.
 resource "aws_eip" "instance" {
-  count    = var.test_environment ? 0 : 1
+  count    = var.use_eip ? 1 : 0
   instance = aws_instance.main.id
   vpc      = true
 }

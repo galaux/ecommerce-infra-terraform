@@ -1,11 +1,10 @@
 variable "name" {
   type = string
-  # default = ""
 }
 
-variable "test_environment" {
-  type    = bool
-  default = true
+variable "use_eip" {
+  type        = bool
+  description = "Whether or not to use an Elastic IP between the DNS and the instance"
 }
 
 variable "dns_zone_id" {

@@ -4,6 +4,9 @@ variable "environment" {
 }
 
 variable "instances" {
-  type        = map(object({ parent_domain = string }))
-  description = "Map of instances with their associated parent_domain"
+  type = map(object({
+    parent_domain = string,
+    use_eip       = bool
+  }))
+  description = "Map of instances with their associated configuration"
 }

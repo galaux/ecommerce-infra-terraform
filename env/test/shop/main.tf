@@ -53,6 +53,7 @@ module "shop" {
   dns_zone_id       = data.terraform_remote_state.dns.outputs.dns[each.value.parent_domain].dns_zone_id
   dkim_tokens       = data.terraform_remote_state.dns.outputs.dns[each.value.parent_domain].dkim_tokens
   parent_domain     = each.value.parent_domain
+  use_eip           = each.value.use_eip
   backup_bucket_arn = data.terraform_remote_state.environment.outputs.backup_bucket_arn
   key_name          = var.environment
 }
