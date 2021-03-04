@@ -105,8 +105,6 @@ such as I was hoping GDB could use.
 #### To import
 
 - `data.terraform_remote_state.base`
-- `module.base.aws_key_pair.main`
-- `module.base.aws_route53_record.ses_verification_record`
 - `module.base.aws_s3_bucket.backup`
 - `module.base.aws_ses_domain_dkim.main`
 - `module.base.aws_ses_domain_identity.main`
@@ -141,6 +139,8 @@ such as I was hoping GDB could use.
 #### Imported
 
 - `module.base.aws_route53_zone.main`
+- `module.base.aws_key_pair.main`
+- `module.base.aws_route53_record.ses_verification_record`
 
 
 ## Misc
@@ -159,3 +159,24 @@ aws \
   start-instances \
   --instance-ids "i-0123456789abcdef1"
 ```
+
+```
+terraform \
+  import \
+  module.base.aws_route53_record.ses_verification_record \
+  Z0EXAMPLEZON02__amazonses.example.com_TXT
+```
+
+
+## Potential test2 → prod delivery scheme
+
+- spin up a brand new instance in AWS account `shop`
+  - with TLD .gq
+  - with Ansible parameter "prod"
+  - but disable backups
+  - manually generate certs
+- add `.com` certificates
+- selectively use Ansible to update the conf of
+  - nginx, postfix, monit, collectd, … (?)
+  - DB: all 4(?) values
+- switch EIP from old-prod to new-prod
