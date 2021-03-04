@@ -68,3 +68,7 @@ variable "backup_bucket_arn" {
   description = "ARN of the bucket where the backup files are stored"
 }
 
+variable "key_name" {
+  type        = string
+  description = "Name of the key to connect to the instance"
+}

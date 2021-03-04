@@ -39,7 +39,7 @@ resource "aws_route53_record" "dkim" {
 
 # SMTP user
 resource "aws_iam_user" "ses_smtp" {
-  name = "ses-smtp"
+  name = "ses-smtp-${var.name}"
 }
 
 resource "aws_iam_user_policy" "ses_smtp" {

@@ -11,8 +11,6 @@
 # resources in the same directory. It should be moved to some other folder
 # along with more _long term_ resources (such as the EC2 key pair, …)
 resource "aws_route53_delegation_set" "main" {
-  # FIXME rename with `var.name`
-  reference_name = "Freenom"
   lifecycle {
     prevent_destroy = true
   }
