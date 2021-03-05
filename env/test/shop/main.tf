@@ -44,16 +44,30 @@ data "terraform_remote_state" "dns" {
     profile = "shop-test"
   }
 }
+
 module "shop" {
   for_each = var.instances
 
   source = "../../../modules/shop"
 
   name              = each.key
-  dns_zone_id       = data.terraform_remote_state.dns.outputs.dns[each.value.parent_domain].dns_zone_id
-  dkim_tokens       = data.terraform_remote_state.dns.outputs.dns[each.value.parent_domain].dkim_tokens
   parent_domain     = each.value.parent_domain
-  use_eip           = each.value.use_eip
   backup_bucket_arn = data.terraform_remote_state.environment.outputs.backup_bucket_arn
   key_name          = var.environment
+}
+
+module "dns_records" {
+  for_each = var.instances
+
+  source = "../../../modules/dns_records"
+
+  # FIXME we shouldn't pass these 3 rather than directly
+  # data.terraform_remote_state.dns.outputs.dns[each.value.parent_domain]
+  dns_zone_id   = data.terraform_remote_state.dns.outputs.dns[each.value.parent_domain].dns_zone_id
+  dkim_tokens   = data.terraform_remote_state.dns.outputs.dns[each.value.parent_domain].dkim_tokens
+  parent_domain = each.value.parent_domain
+
+  use_eip            = each.value.use_eip
+  target_instance_id = module.shop[each.key].instance_id
+  target_public_ip   = module.shop[each.key].instance_public_ip
 }

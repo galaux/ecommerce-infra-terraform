@@ -2,15 +2,6 @@ variable "name" {
   type = string
 }
 
-variable "use_eip" {
-  type        = bool
-  description = "Whether or not to use an Elastic IP between the DNS and the instance"
-}
-
-variable "dns_zone_id" {
-  type = string
-}
-
 variable "ami" {
   type        = string
   description = "EC2 AMI identifier"
@@ -46,20 +37,6 @@ variable "open_ports_ipv6" {
 variable "parent_domain" {
   type        = string
   description = "Parent domain name (\"example.xyz\")"
-}
-
-variable "sub_domains" {
-  type = list(string)
-  default = [
-    "admin",
-    "blog",
-    "www"
-  ]
-}
-
-variable "dkim_tokens" {
-  description = "Generated DKIM tokens"
-  type        = list(string)
 }
 
 variable "backup_bucket_arn" {

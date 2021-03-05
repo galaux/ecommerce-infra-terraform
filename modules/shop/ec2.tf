@@ -44,12 +44,3 @@ resource "aws_instance" "main" {
     Name = var.name
   }
 }
-
-# We refrain from using an EIP for test instances as these must be paid for if
-# not assigned to a running instance. For test instances, we thus have the DNS
-# records point at the EC2 instance public IP directly.
-resource "aws_eip" "instance" {
-  count    = var.use_eip ? 1 : 0
-  instance = aws_instance.main.id
-  vpc      = true
-}

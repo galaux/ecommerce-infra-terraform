@@ -8,6 +8,6 @@ locals {
   # of the EC2 instance whether we are in test or not.
   #
   # [0]: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#public_ip
-  instance_ip  = var.use_eip ? aws_eip.instance[0].public_ip : aws_instance.main.public_ip
-  instance_dns = var.use_eip ? aws_eip.instance[0].public_dns : aws_instance.main.public_dns
+  target_ip = var.use_eip ? aws_eip.instance[0].public_ip : var.target_public_ip
+  # instance_dns = var.use_eip ? aws_eip.instance[0].public_dns : aws_instance.main.public_dns
 }

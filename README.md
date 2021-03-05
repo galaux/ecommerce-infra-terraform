@@ -180,3 +180,20 @@ terraform \
   - nginx, postfix, monit, collectd, … (?)
   - DB: all 4(?) values
 - switch EIP from old-prod to new-prod
+
+## Commands to switch EIPs for prod delivery
+
+```bash
+terraform destroy \
+  --target 'module.shop["green"].aws_eip.instance[1]' \
+  --target 'module.shop["green"].aws_route53_record.dkim[0]' \
+  --target 'module.shop["green"].aws_route53_record.dkim[1]' \
+  --target 'module.shop["green"].aws_route53_record.dkim[2]' \
+  --target 'module.shop["green"].aws_route53_record.dmarc' \
+  --target 'module.shop["green"].aws_route53_record.mx' \
+  --target 'module.shop["green"].aws_route53_record.parent_domain' \
+  --target 'module.shop["green"].aws_route53_record.spf' \
+  --target 'module.shop["green"].aws_route53_record.sub_domain["admin"]' \
+  --target 'module.shop["green"].aws_route53_record.sub_domain["blog"]' \
+  --target 'module.shop["green"].aws_route53_record.sub_domain["www"]'
+```
