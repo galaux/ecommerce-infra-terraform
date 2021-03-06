@@ -1,3 +1,13 @@
+# The complete output of this module is passed raw as input variable to module
+# `dns_records` which is thus expecting this exact format (except for
+# `delegation_set_name_servers`) so changes to this file must also be applied
+# to `module.dns_records.dns`.
+
+output "parent_domain" {
+  description = "Parent domain for this DNS"
+  value       = var.parent_domain
+}
+
 output "dns_zone_id" {
   description = "ID of the DNS zone"
   value       = aws_route53_zone.main.zone_id

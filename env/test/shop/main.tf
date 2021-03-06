@@ -61,11 +61,7 @@ module "dns_records" {
 
   source = "../../../modules/dns_records"
 
-  # FIXME we shouldn't pass these 3 rather than directly
-  # data.terraform_remote_state.dns.outputs.dns[each.value.parent_domain]
-  dns_zone_id   = data.terraform_remote_state.dns.outputs.dns[each.value.parent_domain].dns_zone_id
-  dkim_tokens   = data.terraform_remote_state.dns.outputs.dns[each.value.parent_domain].dkim_tokens
-  parent_domain = each.value.parent_domain
+  dns = data.terraform_remote_state.dns.outputs.dns[each.value.parent_domain]
 
   use_eip            = each.value.use_eip
   target_instance_id = module.shop[each.key].instance_id

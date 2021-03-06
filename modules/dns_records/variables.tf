@@ -1,15 +1,11 @@
-variable "dns_zone_id" {
-  type = string
-}
-
-variable "dkim_tokens" {
-  description = "Generated DKIM tokens"
-  type        = list(string)
-}
-
-variable "parent_domain" {
-  description = "Parent domain name"
-  type        = string
+# This structure is the exact output of what module dns produces
+variable "dns" {
+  description = "DNS configuration"
+  type = object({
+    dns_zone_id   = string
+    dkim_tokens   = list(string)
+    parent_domain = string
+  })
 }
 
 variable "use_eip" {
