@@ -8,10 +8,10 @@ instances = [
 dns_records = {
   "example.ml" = {
     instance = "green"
-    use_eip  = true
+    use_eip  = false
   },
   "example.tk" = {
     instance = "yellow"
-    use_eip  = true
+    use_eip  = false
   }
 }

@@ -7,7 +7,7 @@ terraform {
 
   backend "s3" {
     bucket  = "shop-tfstate-test"
-    key     = "dns.tfstate"
+    key     = "zone_base.tfstate"
     region  = "eu-central-1"
     profile = "shop-test"
   }
@@ -21,10 +21,10 @@ terraform {
 
 }
 
-module "dns" {
+module "zone_base" {
   for_each = toset(var.parent_domains)
 
-  source = "../../../modules/dns"
+  source = "../../../modules/zone_base"
 
   parent_domain = each.key
 }
