@@ -56,6 +56,6 @@ resource "aws_route53_record" "dkim" {
 # records point at the EC2 instance public IP directly.
 resource "aws_eip" "instance" {
   count    = var.use_eip ? 1 : 0
-  instance = var.target_instance_id
+  instance = var.instance.id
   vpc      = true
 }

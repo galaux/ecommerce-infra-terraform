@@ -13,14 +13,12 @@ variable "use_eip" {
   description = "Whether or not to use an Elastic IP between the DNS and the instance"
 }
 
-variable "target_instance_id" {
-  type        = string
-  description = "ID of the EC2 instance that DNS entries must point at (used if instructed to use an Elastic ip)"
-}
-
-variable "target_public_ip" {
-  type        = string
-  description = "Public IP that DNS entries must point at (used if instructed NOT to use an Elastic ip)"
+variable "instance" {
+  type = object({
+    public_ip = string
+    id        = string
+  })
+  description = "TODO"
 }
 
 variable "sub_domains" {

@@ -45,6 +45,14 @@ data "terraform_remote_state" "dns" {
   }
 }
 
+data "aws_instance" "instances" {
+  for_each = var.instances
+
+  instance_tags = {
+    Name = each.key
+  }
+}
+
 module "shop" {
   for_each = var.instances
 
@@ -63,7 +71,6 @@ module "dns_records" {
 
   dns = data.terraform_remote_state.dns.outputs.dns[each.value.parent_domain]
 
-  use_eip            = each.value.use_eip
-  target_instance_id = module.shop[each.key].instance_id
-  target_public_ip   = module.shop[each.key].instance_public_ip
+  use_eip  = each.value.use_eip
+  instance = data.aws_instance.instances[each.key]
 }
