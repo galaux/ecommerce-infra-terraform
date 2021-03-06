@@ -1,12 +1,17 @@
 environment = "test"
 
-instances = {
-  green = {
-    parent_domain = "example.ml",
-    use_eip       = false
+instances = [
+  "green",
+  "yellow"
+]
+
+dns_records = {
+  "example.ml" = {
+    instance = "green"
+    use_eip  = true
   },
-  yellow = {
-    parent_domain = "example.tk",
-    use_eip       = false
+  "example.tk" = {
+    instance = "yellow"
+    use_eip  = true
   }
 }

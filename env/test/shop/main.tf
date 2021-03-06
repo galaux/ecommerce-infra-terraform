@@ -54,23 +54,22 @@ data "aws_instance" "instances" {
 }
 
 module "shop" {
-  for_each = var.instances
+  for_each = toset(var.instances)
 
   source = "../../../modules/shop"
 
   name              = each.key
-  parent_domain     = each.value.parent_domain
   backup_bucket_arn = data.terraform_remote_state.environment.outputs.backup_bucket_arn
   key_name          = var.environment
 }
 
 module "dns_records" {
-  for_each = var.instances
+  for_each = var.dns_records
 
   source = "../../../modules/dns_records"
 
-  dns = data.terraform_remote_state.dns.outputs.dns[each.value.parent_domain]
+  dns = data.terraform_remote_state.dns.outputs.dns[each.key]
 
   use_eip  = each.value.use_eip
-  instance = data.aws_instance.instances[each.key]
+  instance = data.aws_instance.instances[each.value.instance]
 }

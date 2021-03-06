@@ -4,9 +4,15 @@ variable "environment" {
 }
 
 variable "instances" {
+  type        = set(string)
+  description = "List of instance names to provision"
+}
+
+
+variable "dns_records" {
   type = map(object({
-    parent_domain = string,
-    use_eip       = string
+    instance = string,
+    use_eip  = string
   }))
   description = "Map of instances with their associated configuration"
 }

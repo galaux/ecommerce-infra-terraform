@@ -185,7 +185,7 @@ terraform \
 
 ```bash
 terraform destroy \
-  --target 'module.shop["green"].aws_eip.instance[1]' \
+  --target 'module.shop["green"].aws_eip.instance[0]' \
   --target 'module.shop["green"].aws_route53_record.dkim[0]' \
   --target 'module.shop["green"].aws_route53_record.dkim[1]' \
   --target 'module.shop["green"].aws_route53_record.dkim[2]' \

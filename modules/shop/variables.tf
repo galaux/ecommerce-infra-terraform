@@ -34,11 +34,6 @@ variable "open_ports_ipv6" {
   ]
 }
 
-variable "parent_domain" {
-  type        = string
-  description = "Parent domain name (\"example.xyz\")"
-}
-
 variable "backup_bucket_arn" {
   type        = string
   description = "ARN of the bucket where the backup files are stored"

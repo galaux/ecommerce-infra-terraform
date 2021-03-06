@@ -6,7 +6,7 @@ locals {
   #
   # For these reasons, this local track the definitive public IP of the EC2
   # instance whether we are in test or not.
-  #
+
   # [0]: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#public_ip
   target_ip = var.use_eip ? aws_eip.instance[0].public_ip : var.instance.public_ip
 }

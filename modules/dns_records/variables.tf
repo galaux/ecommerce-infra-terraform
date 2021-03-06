@@ -10,7 +10,7 @@ variable "dns" {
 
 variable "use_eip" {
   type        = bool
-  description = "Whether or not to use an Elastic IP between the DNS and the instance"
+  description = "Whether this instance/dns link should rely on an Elastic IP or if DNS entries should directly point at the instance public IP"
 }
 
 variable "instance" {
@@ -18,7 +18,7 @@ variable "instance" {
     public_ip = string
     id        = string
   })
-  description = "TODO"
+  description = "Instance detail"
 }
 
 variable "sub_domains" {
