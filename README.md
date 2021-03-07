@@ -197,3 +197,138 @@ terraform destroy \
   --target 'module.shop["green"].aws_route53_record.sub_domain["blog"]' \
   --target 'module.shop["green"].aws_route53_record.sub_domain["www"]'
 ```
+
+## Rework of this README
+
+File hierarchy:
+
+```
+├── modules
+│   ├── environment
+│   ├── zone_base
+│   ├── instance
+│   └── dns_records
+└── env
+    ├── test
+    │   ├── environment
+    │   ├── zone_base
+    │   └── instance_with_dns
+    └── prod
+        └── …
+```
+
+- `./modules/environment`: base resources required for an environment (such as
+  `test` and `prod`). Currently declares an authentication key pair and a
+  backup S3 bucket.
+- `./modules/zone_base`: base DNS zone and SES resources for a "domain name"
+  (ie "example.com", "example.fr", …).
+- `./modules/instance`: resources required for an EC2 instance without anything
+  to do with DNS records.
+- `./modules/dns_records`: DNS records linking an `instance` to a `zone_base`.
+
+- `./env/test/environment`: declares one instance of `./module/environment` to
+  setup the common resources for the `test` environment. Resources in this
+  directory are long lived, they should seldom need update and are available
+  for all other modules which is the reason why they are isolated in their own
+  module. This module doesn't depend on any other.
+- `./env/test/zone_base`: declares one or more DNS zones and corresponding SES
+  resources for `test` (currently `.ml` and `.tk`). Resources in this directory
+  are long lived. They are isolated in their own module because they are rather
+  long to provision mostly because they start DNS and SES verification
+  processes that we don't want to have to go through more than once. This
+  module doesn't depend on any other module.
+- `./env/test/instance_with_dns`: declares multiple instances of
+  `./module/instance` along with a corresponding `./module/dns_records` thus
+  effectively linking the instance to a domain name. Resources in this
+  directory can be short lived if need be. Resources from this module's
+  `instance` don't depend on any other module/resource. Resources from this
+  module's `dns_records` depend on:
+  - output of external module `env/test/environment` and `env/test/zone_base`
+    which are accessed through S3 data sources
+  - the inner `instance` module which data is read through a data source to
+    dynamically list EC2 instances
+
+```bash
+$ cd env/test/environment
+$ terraform state list
+# Test environment declares the "test specific" EC2 authentication key pair
+# and the "test specific" backup bucket
+module.environment.aws_key_pair.main
+module.environment.aws_s3_bucket.backup
+```
+
+```bash
+$ cd env/test/zone_base
+$ terraform state list
+# Test zone_base declares 2 DNS zones:
+module.zone_base["example.ml"].aws_route53_delegation_set.main
+module.zone_base["example.ml"].aws_route53_zone.main
+module.zone_base["example.ml"].aws_ses_domain_identity.main
+module.zone_base["example.ml"].aws_route53_record.ses_verification_record
+module.zone_base["example.ml"].aws_ses_domain_dkim.main
+#
+module.zone_base["example.tk"].aws_route53_delegation_set.main
+module.zone_base["example.tk"].aws_route53_zone.main
+module.zone_base["example.tk"].aws_ses_domain_identity.main
+module.zone_base["example.tk"].aws_route53_record.ses_verification_record
+module.zone_base["example.tk"].aws_ses_domain_dkim.main
+```
+
+```bash
+$ cd env/test/instance_with_dns
+$ terraform state list
+# Terraform data source to fetch instances info
+data.aws_instance.instances["green"]
+data.aws_instance.instances["yellow"]
+# Terraform remote state for the environment and zone_base both persisted on S3
+data.terraform_remote_state.environment
+data.terraform_remote_state.zone_base
+# EC2 resources for green instance
+module.instance["green"].aws_iam_access_key.ses_smtp
+module.instance["green"].aws_iam_instance_profile.ec2_profile
+module.instance["green"].aws_iam_policy.s3_bucket_access
+module.instance["green"].aws_iam_policy_attachment.attach_s3_policy_ec2
+module.instance["green"].aws_iam_role.ec2_assume
+module.instance["green"].aws_iam_user.ses_smtp
+module.instance["green"].aws_iam_user_policy.ses_smtp
+module.instance["green"].aws_instance.main
+module.instance["green"].aws_security_group.main
+# .ml EIP pointing at previous instance
+module.dns_records["example.ml"].aws_eip.instance[0]
+# .ml DNS records pointing at previous EIP
+module.dns_records["example.ml"].aws_route53_record.parent_domain
+module.dns_records["example.ml"].aws_route53_record.sub_domain["admin"]
+module.dns_records["example.ml"].aws_route53_record.sub_domain["blog"]
+module.dns_records["example.ml"].aws_route53_record.sub_domain["www"]
+module.dns_records["example.ml"].aws_route53_record.mx
+module.dns_records["example.ml"].aws_route53_record.spf
+module.dns_records["example.ml"].aws_route53_record.dkim[0]
+module.dns_records["example.ml"].aws_route53_record.dkim[1]
+module.dns_records["example.ml"].aws_route53_record.dkim[2]
+module.dns_records["example.ml"].aws_route53_record.dmarc
+
+# Same for tk
+module.dns_records["example.tk"].aws_eip.instance[0]
+module.dns_records["example.tk"].aws_route53_record.dkim[0]
+module.dns_records["example.tk"].aws_route53_record.dkim[1]
+module.dns_records["example.tk"].aws_route53_record.dkim[2]
+module.dns_records["example.tk"].aws_route53_record.dmarc
+module.dns_records["example.tk"].aws_route53_record.mx
+module.dns_records["example.tk"].aws_route53_record.parent_domain
+module.dns_records["example.tk"].aws_route53_record.spf
+module.dns_records["example.tk"].aws_route53_record.sub_domain["admin"]
+module.dns_records["example.tk"].aws_route53_record.sub_domain["blog"]
+module.dns_records["example.tk"].aws_route53_record.sub_domain["www"]
+module.instance["yellow"].aws_iam_access_key.ses_smtp
+module.instance["yellow"].aws_iam_instance_profile.ec2_profile
+module.instance["yellow"].aws_iam_policy.s3_bucket_access
+module.instance["yellow"].aws_iam_policy_attachment.attach_s3_policy_ec2
+module.instance["yellow"].aws_iam_role.ec2_assume
+module.instance["yellow"].aws_iam_user.ses_smtp
+module.instance["yellow"].aws_iam_user_policy.ses_smtp
+module.instance["yellow"].aws_instance.main
+module.instance["yellow"].aws_security_group.main
+```
+
+
+TODO give example of `terraform state mv …` and `terraform import … …`
