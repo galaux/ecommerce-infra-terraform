@@ -2,7 +2,7 @@ environment = "test"
 
 instances = [
   "green",
-  "yellow"
+  # "yellow"
 ]
 
 dns_records = {
@@ -10,8 +10,8 @@ dns_records = {
     instance = "green"
     use_eip  = false
   },
-  "example.tk" = {
-    instance = "yellow"
-    use_eip  = false
-  }
+  # "example.tk" = {
+  #   instance = "yellow"
+  #   use_eip  = false
+  # }
 }
