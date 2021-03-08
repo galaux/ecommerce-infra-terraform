@@ -24,6 +24,7 @@ terraform {
 module "environment" {
   source = "../../../modules/environment"
 
-  name       = var.name
-  public_key = var.public_key
+  name               = var.name
+  public_key         = var.public_key
+  backup_bucket_name = "shop-backup-${var.name}"
 }
