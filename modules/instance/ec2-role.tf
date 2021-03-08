@@ -26,6 +26,7 @@ resource "aws_iam_role" "ec2_assume" {
   })
 }
 
+
 resource "aws_iam_policy" "s3_bucket_access" {
   name        = "${var.name}-s3-bucket-access"
   description = "Allow access to the backup S3 bucket"
@@ -45,12 +46,37 @@ resource "aws_iam_policy" "s3_bucket_access" {
   })
 }
 
-resource "aws_iam_policy_attachment" "attach_s3_policy_ec2" {
-  name       = "${var.name}-attach-s3-policy-ec2"
-  roles      = [aws_iam_role.ec2_assume.name]
+resource "aws_iam_role_policy_attachment" "attach_s3_policy_ec2" {
+  role       = aws_iam_role.ec2_assume.name
   policy_arn = aws_iam_policy.s3_bucket_access.arn
 }
 
+
+resource "aws_iam_policy" "update_dns" {
+  name        = "${var.name}-update-dns"
+  description = "Allow updating the DNS records"
+  policy = jsonencode({
+    Version : "2012-10-17",
+    Statement : [
+      {
+        Effect : "Allow",
+        Action : [
+          "route53:ChangeResourceRecordSets"
+        ],
+        Resource : "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "attach_dns_policy_ec2" {
+  role       = aws_iam_role.ec2_assume.name
+  policy_arn = aws_iam_policy.update_dns.arn
+}
+
+
+# Watch-out: see remark where we provision the EC2 instance about EC2 profiles
+# only being associated with the instance at instance creation time.
 resource "aws_iam_instance_profile" "ec2_profile" {
   name = "${var.name}-ec2-profile"
   role = aws_iam_role.ec2_assume.name

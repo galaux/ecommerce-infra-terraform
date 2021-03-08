@@ -38,7 +38,13 @@ resource "aws_instance" "main" {
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
   key_name               = var.key_name
-  iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
+  # Watch-out: it seems the instance profile can only be associated with the
+  # instance when the instance is created. ie: if you delete then re-create
+  # the profile, it won't be associated with the instance. It seems the only
+  # solution left is to re-provision the instance.
+  # FYI, list the instance profile with:
+  #   aws --profile=shop-test iam list-instance-profiles
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
 
   tags = {
     Name = var.name
