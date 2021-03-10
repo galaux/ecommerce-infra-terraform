@@ -8,6 +8,7 @@ variable "name" {
   type = string
 }
 
+# CentOS page listing EC2 images: https://wiki.centos.org/Cloud/AWS
 variable "ami" {
   type        = string
   description = "EC2 AMI identifier"
