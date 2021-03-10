@@ -54,13 +54,15 @@ data "aws_instance" "instances" {
 }
 
 module "instance" {
-  for_each = toset(var.instances)
+  for_each = var.instances
 
   source = "../../../modules/instance"
 
   name              = each.key
   backup_bucket_arn = data.terraform_remote_state.environment.outputs.backup_bucket_arn
   key_name          = var.environment
+  aws_account_id    = var.aws_account_id
+  stop_if_unused    = each.value.stop_if_unused
 }
 
 module "dns_records" {

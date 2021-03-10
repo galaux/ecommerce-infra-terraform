@@ -1,3 +1,9 @@
+# Used to craft the ARN of the CloudWatch action that stops test EC2 instances
+variable "aws_account_id" {
+  type        = string
+  description = "ID of the AWS account"
+}
+
 variable "name" {
   type = string
 }
@@ -42,4 +48,10 @@ variable "backup_bucket_arn" {
 variable "key_name" {
   type        = string
   description = "Name of the key to connect to the instance"
+}
+
+variable "stop_if_unused" {
+  type        = bool
+  description = "Should this instance be stopped if CloudWatch detects inactivity"
+  default     = false
 }

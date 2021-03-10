@@ -50,3 +50,28 @@ resource "aws_instance" "main" {
     Name = var.name
   }
 }
+
+resource "aws_cloudwatch_metric_alarm" "foobar" {
+  count = var.stop_if_unused ? 1 : 0
+
+  alarm_name        = "terraform-test-foobar5"
+  alarm_description = "TODO"
+  # FIXME use aws_cloudwatch_event_target as shown here
+  # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_target
+  # https://gist.github.com/picadoh/815c11361d1a88419ea16b14fe044e85
+  alarm_actions = [
+    "arn:aws:swf:eu-central-1:${var.aws_account_id}:action/actions/AWS_EC2.InstanceId.Stop/1.0"
+  ]
+  insufficient_data_actions = []
+  metric_name               = "NetworkIn"
+  namespace                 = "AWS/EC2"
+  statistic                 = "Average"
+  dimensions = {
+    InstanceId = aws_instance.main.id
+  }
+  period              = "900"
+  evaluation_periods  = "4"
+  datapoints_to_alarm = "4"
+  threshold           = "5000"
+  comparison_operator = "LessThanThreshold"
+}
