@@ -40,14 +40,6 @@ variable "http_allowed_ips" {
   default     = []
 }
 
-variable "open_ports_ipv6" {
-  type = list(string)
-  default = [
-    "80",
-    "443"
-  ]
-}
-
 variable "backup_bucket_arn" {
   type        = string
   description = "ARN of the bucket where the backup files are stored"

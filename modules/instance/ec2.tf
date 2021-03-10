@@ -13,17 +13,6 @@ resource "aws_security_group" "main" {
     }
   }
 
-  dynamic "ingress" {
-    for_each = var.open_ports_ipv6
-
-    content {
-      from_port        = ingress.value
-      to_port          = ingress.value
-      protocol         = "tcp"
-      ipv6_cidr_blocks = ["::/0"]
-    }
-  }
-
   egress {
     from_port   = 0
     to_port     = 0
