@@ -63,6 +63,7 @@ module "instance" {
   key_name          = var.environment
   aws_account_id    = var.aws_account_id
   stop_if_unused    = each.value.stop_if_unused
+  http_allowed_ips  = each.value.http_allowed_ips
 }
 
 module "dns_records" {

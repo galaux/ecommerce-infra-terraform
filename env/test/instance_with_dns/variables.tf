@@ -12,6 +12,7 @@ variable "environment" {
 variable "instances" {
   type = map(object({
     stop_if_unused : bool
+    http_allowed_ips : list(string)
   }))
   description = "List of instance names to provision"
 }

@@ -31,6 +31,13 @@ variable "open_ports_ipv4" {
     "443",
     "22"
   ]
+
+}
+
+variable "http_allowed_ips" {
+  type        = list(string)
+  description = "List of IPs allowed HTTP(S) access (`[]` means \"all IPs\")"
+  default     = []
 }
 
 variable "open_ports_ipv6" {

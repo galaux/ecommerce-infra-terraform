@@ -3,13 +3,13 @@ resource "aws_security_group" "main" {
   description = "Allow TLS inbound traffic"
 
   dynamic "ingress" {
-    iterator = port
-    for_each = var.open_ports_ipv4
+    for_each = local.open_ports_ipv4
+
     content {
-      from_port   = port.value
-      to_port     = port.value
+      from_port   = ingress.key
+      to_port     = ingress.key
       protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
+      cidr_blocks = ingress.value.cidr_blocks
     }
   }
 
