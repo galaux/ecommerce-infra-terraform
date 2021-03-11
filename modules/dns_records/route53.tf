@@ -2,7 +2,7 @@ resource "aws_route53_record" "parent_domain" {
   zone_id = var.zone_base.dns_zone_id
   name    = var.zone_base.parent_domain
   type    = "A"
-  ttl     = "300"
+  ttl     = "600"
   records = [local.target_ip]
 }
 
@@ -11,7 +11,7 @@ resource "aws_route53_record" "sub_domain" {
   zone_id  = var.zone_base.dns_zone_id
   name     = "${each.key}.${var.zone_base.parent_domain}"
   type     = "A"
-  ttl      = "300"
+  ttl      = "600"
   records  = [local.target_ip]
 }
 
