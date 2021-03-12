@@ -1,6 +1,5 @@
-# Used by module dns_records to setup an EIP when instructed to use one
-output "instance_id" {
-  value = aws_instance.main.id
+output "instance_ip" {
+  value = local.instance_ip
 }
 
 output "smtp_username" {

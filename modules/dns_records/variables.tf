@@ -8,18 +8,9 @@ variable "zone_base" {
   })
 }
 
-variable "use_eip" {
-  type        = bool
-  description = "Whether this set of DNS records should rely on an Elastic IP or if they should directly point at the instance public IP"
-}
-
-variable "instance" {
-  type = object({
-    public_ip = string
-    id        = string
-    tags      = map(string)
-  })
-  description = "Instance detail"
+variable "target_ip" {
+  type        = string
+  description = "Target IP of these DNS records"
 }
 
 variable "sub_domains" {

@@ -3,9 +3,11 @@ environment    = "prod"
 
 instances = {
   brown = {
+    use_eip        = true,
     stop_if_unused = true,
     http_allowed_ips = [
-      "0.0.0.0/0"
+      "203.0.113.20/32", # GDB @ home
+      "203.0.113.24/32"    # GAX @ home
     ]
   },
 }
@@ -13,10 +15,8 @@ instances = {
 dns_records = {
   "example.ga" = {
     instance = "brown"
-    use_eip  = false
   },
   "example.gq" = {
     instance = "brown"
-    use_eip  = false
   }
 }

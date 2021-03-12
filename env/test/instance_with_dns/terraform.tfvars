@@ -3,16 +3,18 @@ environment    = "test"
 
 instances = {
   green = {
+    use_eip        = false,
     stop_if_unused = true,
     http_allowed_ips = [
-      "203.0.113.21/32", # GDB @ home
+      "203.0.113.20/32", # GDB @ home
       "203.0.113.24/32"    # GAX @ home
     ]
   },
   yellow = {
+    use_eip        = false,
     stop_if_unused = true,
     http_allowed_ips = [
-      "203.0.113.21/32", # GDB @ home
+      "203.0.113.20/32", # GDB @ home
       "203.0.113.24/32"    # GAX @ home
     ]
   },
@@ -21,10 +23,8 @@ instances = {
 dns_records = {
   "example.ml" = {
     instance = "green"
-    use_eip  = false
   },
   "example.tk" = {
     instance = "yellow"
-    use_eip  = false
   }
 }

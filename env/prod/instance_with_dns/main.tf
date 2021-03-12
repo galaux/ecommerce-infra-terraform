@@ -62,6 +62,7 @@ module "instance" {
   backup_bucket_arn = data.terraform_remote_state.environment.outputs.backup_bucket_arn
   key_name          = var.environment
   aws_account_id    = var.aws_account_id
+  use_eip           = each.value.use_eip
   stop_if_unused    = each.value.stop_if_unused
   http_allowed_ips  = each.value.http_allowed_ips
 }
@@ -73,6 +74,5 @@ module "dns_records" {
 
   zone_base = data.terraform_remote_state.zone_base.outputs.zone_base[each.key]
 
-  use_eip  = each.value.use_eip
-  instance = data.aws_instance.instances[each.value.instance]
+  target_ip = data.aws_instance.instances[each.value.instance].public_ip
 }

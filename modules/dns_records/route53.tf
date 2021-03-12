@@ -3,7 +3,7 @@ resource "aws_route53_record" "parent_domain" {
   name    = var.zone_base.parent_domain
   type    = "A"
   ttl     = "600"
-  records = [local.target_ip]
+  records = [var.target_ip]
 }
 
 resource "aws_route53_record" "sub_domain" {
@@ -12,7 +12,7 @@ resource "aws_route53_record" "sub_domain" {
   name     = "${each.key}.${var.zone_base.parent_domain}"
   type     = "A"
   ttl      = "600"
-  records  = [local.target_ip]
+  records  = [var.target_ip]
 }
 
 
@@ -21,7 +21,7 @@ resource "aws_route53_record" "spf" {
   name    = var.zone_base.parent_domain
   type    = "TXT"
   ttl     = "600"
-  records = ["v=spf1 ip4:${local.target_ip} ~all"]
+  records = ["v=spf1 ip4:${var.target_ip} ~all"]
 }
 
 resource "aws_route53_record" "dmarc" {
@@ -48,14 +48,4 @@ resource "aws_route53_record" "dkim" {
   type    = "CNAME"
   ttl     = "600"
   records = ["${element(var.zone_base.dkim_tokens, count.index)}.dkim.amazonses.com"]
-}
-
-
-# We refrain from using an EIP for test instances as these must be paid for if
-# not assigned to a running instance. For test instances, we thus have the DNS
-# records point at the EC2 instance public IP directly.
-resource "aws_eip" "instance" {
-  count    = var.use_eip ? 1 : 0
-  instance = var.instance.id
-  vpc      = true
 }

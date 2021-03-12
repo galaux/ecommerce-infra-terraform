@@ -11,6 +11,7 @@ variable "environment" {
 
 variable "instances" {
   type = map(object({
+    use_eip : bool
     stop_if_unused : bool
     http_allowed_ips : list(string)
   }))
@@ -21,7 +22,6 @@ variable "instances" {
 variable "dns_records" {
   type = map(object({
     instance = string,
-    use_eip  = string
   }))
   description = "Map of instances with their associated configuration"
 }
