@@ -1,15 +1,9 @@
 output "instances" {
   description = "Instances info"
-  value = {
-    for instance in data.aws_instance.instances : instance.instance_tags.Name => {
-      id            = instance.id
-      smtp_username = module.instance[instance.instance_tags.Name].smtp_username
-      smtp_password = module.instance[instance.instance_tags.Name].smtp_password
-    }
-  }
+  value       = module.instances
 }
 
-output "dns_records" {
-  description = "DNS records info"
-  value       = module.dns_records
+output "dns_records_sets" {
+  description = "DNS records sets info"
+  value       = module.dns_records_sets
 }

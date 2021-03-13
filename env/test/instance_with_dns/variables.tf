@@ -9,19 +9,7 @@ variable "environment" {
   description = "The name of this environment (\"test\" or \"prod\")"
 }
 
-variable "instances" {
-  type = map(object({
-    stop_if_unused : bool
-    http_allowed_ips : list(string)
-  }))
-  description = "List of instance names to provision"
-}
-
-
-variable "dns_records" {
-  type = map(object({
-    instance = string,
-    use_eip  = string
-  }))
-  description = "Map of instances with their associated configuration"
+variable "http_allowed_ips" {
+  type        = list(string)
+  description = "List IPs white listed to access HTTP(S) ports"
 }

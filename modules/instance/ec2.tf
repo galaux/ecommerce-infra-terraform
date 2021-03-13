@@ -39,11 +39,11 @@ resource "aws_instance" "main" {
   }
 }
 
-resource "aws_cloudwatch_metric_alarm" "foobar" {
+resource "aws_cloudwatch_metric_alarm" "stop_if_unused" {
   count = var.stop_if_unused ? 1 : 0
 
-  alarm_name        = "terraform-test-foobar5"
-  alarm_description = "TODO"
+  alarm_name        = "${var.name}_stop_if_unused"
+  alarm_description = "Stop the instance if IN network is under a threshold"
   # FIXME use aws_cloudwatch_event_target as shown here
   # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_target
   # https://gist.github.com/picadoh/815c11361d1a88419ea16b14fe044e85
