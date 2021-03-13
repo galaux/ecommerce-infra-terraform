@@ -1,5 +1,9 @@
-output "instance_ip" {
-  value = local.instance_ip
+output "id" {
+  value = aws_instance.id
+}
+
+output "public_ip" {
+  value = aws_instance.public_ip
 }
 
 output "smtp_username" {

@@ -21,11 +21,6 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
-variable "use_eip" {
-  type        = bool
-  description = "Whether or not this instance should use an Elastic IP"
-}
-
 variable "open_ports_ipv4" {
   type = list(string)
   default = [
@@ -36,7 +31,6 @@ variable "open_ports_ipv4" {
     "443",
     "22"
   ]
-
 }
 
 variable "http_allowed_ips" {
