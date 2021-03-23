@@ -57,9 +57,13 @@ resource "aws_cloudwatch_metric_alarm" "stop_if_unused" {
   dimensions = {
     InstanceId = aws_instance.main.id
   }
+  # Create one data point every 900s (15') and trigger alarm if 8 of these
+  # points out of 8 have an average NetworkIn <= 5000.
+  # 8 × 15' = 2h so this means the alarm will be triggered if every 15' for the
+  # past 2h, the average NetworkIn has been under 5000.
   period              = "900"
-  evaluation_periods  = "4"
-  datapoints_to_alarm = "4"
+  evaluation_periods  = "8"
+  datapoints_to_alarm = "8"
   threshold           = "5000"
   comparison_operator = "LessThanThreshold"
 }
