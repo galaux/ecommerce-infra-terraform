@@ -3,6 +3,7 @@
 # period (which took less than 5' in effect but can take quite some time in
 # theory), SES field "Verification" is set to "pending verification" then when
 # done to "verified".
+# aws --profile=shop ses list-identities
 resource "aws_ses_domain_identity" "main" {
   domain = var.parent_domain
 }

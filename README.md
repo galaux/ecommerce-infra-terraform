@@ -332,3 +332,45 @@ module.instance["yellow"].aws_security_group.main
 
 
 TODO give example of `terraform state mv …` and `terraform import … …`
+
+
+## Examples of `terraform import`
+
+```bash
+terraform import 'module.zone_base["example.com"].aws_route53_delegation_set.main'
+terraform import 'module.zone_base["example.fr"].aws_route53_zone.main' Z0EXAMPLEZON01
+terraform import 'module.zone_base["example.com"].aws_route53_zone.main' Z0EXAMPLEZON02
+terraform import 'module.zone_base["example.com"].aws_ses_domain_identity.main' example.com
+terraform import 'module.zone_base["example.fr"].aws_ses_domain_identity.main' example.fr
+terraform import 'module.zone_base["example.fr"].aws_route53_record.ses_verification_record' example.fr
+terraform import 'module.zone_base["example.com"].aws_route53_record.ses_verification_record' example.com
+terraform import 'module.zone_base["example.com"].aws_route53_record.ses_verification_record' Z0EXAMPLEZON02__amazonses.example.com_TXT
+terraform import 'module.zone_base["example.fr"].aws_route53_record.ses_verification_record' Z0EXAMPLEZON01__amazonses.example.fr_TXT
+terraform import 'module.zone_base["example.fr"].aws_route53_record.ses_verification_record'
+terraform import 'module.zone_base["example.com"].aws_ses_domain_dkim.main' example.com
+terraform import aws_eip.main_prod 203.0.113.10
+terraform import 'module.dns_records_sets["example.fr"].aws_route53_record.parent_domain' example.fr
+terraform import 'module.dns_records_sets["example.fr"].aws_route53_record.parent_domain' Z0EXAMPLEZON01_example.fr_A
+terraform import 'module.dns_records_sets["example.com"].aws_route53_record.parent_domain' Z0EXAMPLEZON02_example.com_A
+terraform import 'module.dns_records_sets["example.fr"].aws_route53_record.sub_domain["admin"]' Z0EXAMPLEZON01_admin.example.fr_A
+terraform import 'module.dns_records_sets["example.fr"].aws_route53_record.sub_domain["blog"]' Z0EXAMPLEZON01_blog.example.fr_A
+terraform import 'module.dns_records_sets["example.fr"].aws_route53_record.sub_domain["www"]' Z0EXAMPLEZON01_www.example.fr_A
+terraform import 'module.dns_records_sets["example.com"].aws_route53_record.sub_domain["www"]' Z0EXAMPLEZON02_www.example.com_A
+terraform import 'module.dns_records_sets["example.com"].aws_route53_record.sub_domain["blog"]' Z0EXAMPLEZON02_blog.example.com_A
+terraform import 'module.dns_records_sets["example.com"].aws_route53_record.sub_domain["admin"]' Z0EXAMPLEZON02_admin.example.com_A
+terraform import --target=module.instances["old_prod"]
+terraform import --target='module.instances["old_prod"]'
+terraform import module.instances["old_prod"] i-0123456789abcdef0
+terraform import 'module.instances["old_prod"]' i-0123456789abcdef0
+terraform import 'instances["old_prod"]' i-0123456789abcdef0
+terraform import 'module.instances["old_prod"].aws_instance.main' i-0123456789abcdef0
+terraform import 'module.dns_records_sets["example.com"].aws_route53_record.dkim[0]' Z0EXAMPLEZON02_mrfnghojnvosvjk56ta7l47msrivhhg4._domainkey.example.com_CNAME
+terraform import 'module.dns_records_sets["example.com"].aws_route53_record.dkim[1]' Z0EXAMPLEZON02_tb7naxle6w4lfwn5j2ffrw235gxpzbjk._domainkey.example.com_CNAME
+terraform import 'module.dns_records_sets["example.com"].aws_route53_record.dkim[2]' Z0EXAMPLEZON02_ujfzwdqqlrplwvltr7havlnu7ehyqxms._domainkey.example.com_CNAME
+terraform import 'module.dns_records_sets["example.com"].aws_route53_record.dmarc' Z0EXAMPLEZON02__dmarc.example.com_TXT
+terraform import 'module.dns_records_sets["example.com"].aws_route53_record.mx' Z0EXAMPLEZON02_example.com_MX
+terraform import 'module.dns_records_sets["example.com"].aws_route53_record.spf' Z0EXAMPLEZON02_example.com_TXT
+terraform import 'module.dns_records_sets["example.com"].aws_route53_record.dkim[0]' Z0EXAMPLEZON02_tb7naxle6w4lfwn5j2ffrw235gxpzbjk._domainkey_CNAME
+terraform import 'module.dns_records_sets["example.com"].aws_route53_record.dkim[1]' Z0EXAMPLEZON02_mrfnghojnvosvjk56ta7l47msrivhhg4._domainkey_CNAME
+terraform import 'module.dns_records_sets["example.com"].aws_route53_record.dkim[2]' Z0EXAMPLEZON02_ujfzwdqqlrplwvltr7havlnu7ehyqxms._domainkey_CNAME
+```
