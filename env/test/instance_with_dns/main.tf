@@ -3,9 +3,6 @@ module "instances" {
     green = {
       stop_if_unused = true
     }
-    yellow = {
-      stop_if_unused = true
-    }
   }
 
   source = "../../../modules/instance"
@@ -18,21 +15,22 @@ module "instances" {
   http_allowed_ips  = var.http_allowed_ips
 }
 
-# resource "aws_eip" "main_test" {
-#   instance = module.instances["yellow"].id
-#   vpc      = true
+# # terraform import aws_eip.main_prod 203.0.113.10
+# resource "aws_eip" "main_prod" {
+#   # instance = module.instances["brown"].id
+#   vpc = true
 # }
 
 module "dns_records_sets" {
   for_each = {
     "example.ml" = {
-      # target = aws_eip.main_test
-      target = module.instances["yellow"]
+      # target = aws_eip.main_prod
+      target = module.instances["green"]
     }
-    "example.tk" = {
-      # target = aws_eip.main_test
-      target = module.instances["yellow"]
-    }
+    # "example.tk" = {
+    #   # target = aws_eip.main_prod
+    #   target = module.instances["green"]
+    # }
   }
 
   source = "../../../modules/dns_records"
