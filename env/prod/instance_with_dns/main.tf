@@ -1,7 +1,7 @@
 module "instances" {
   for_each = {
     brown = {
-      stop_if_unused = true
+      stop_if_unused = false
     }
   }
 
