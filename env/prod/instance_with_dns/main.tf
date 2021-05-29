@@ -29,14 +29,22 @@ module "dns_records_sets" {
     "example.fr" = {
       target = aws_eip.main_prod
     }
-    "example.gq" = {
-      # target = aws_eip.main_prod
-      target = module.instances["brown"]
-    }
-    "example.ga" = {
-      # target = aws_eip.main_prod
-      target = module.instances["brown"]
-    }
+    # "example.gq" = {
+    #   # target = aws_eip.main_prod
+    #   target = module.instances["brown"]
+    # }
+    # "example.ga" = {
+    #   # target = aws_eip.main_prod
+    #   target = module.instances["brown"]
+    # }
+    # "example.ml" = {
+    #   # target = aws_eip.main_prod
+    #   target = module.instances["brown"]
+    # }
+    # "example.tk" = {
+    #   # target = aws_eip.main_prod
+    #   target = module.instances["brown"]
+    # }
   }
 
   source = "../../../modules/dns_records"
