@@ -17,8 +17,8 @@ module "instances" {
 
 # terraform import aws_eip.main_prod 203.0.113.10
 resource "aws_eip" "main_prod" {
-  # instance = module.instances["brown"].id
-  vpc = true
+  instance = module.instances["brown"].id
+  vpc      = true
 }
 
 module "dns_records_sets" {
