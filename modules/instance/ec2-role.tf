@@ -61,7 +61,9 @@ resource "aws_iam_policy" "update_dns" {
       {
         Effect : "Allow",
         Action : [
-          "route53:ChangeResourceRecordSets"
+          "route53:ChangeResourceRecordSets",
+          "route53:GetChange",
+          "route53:ListHostedZones"
         ],
         Resource : "*"
       }
