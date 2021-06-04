@@ -27,10 +27,10 @@ module "dns_records_sets" {
       # target = aws_eip.main_prod
       target = module.instances["green"]
     }
-    # "example.tk" = {
-    #   # target = aws_eip.main_prod
-    #   target = module.instances["green"]
-    # }
+    "example.tk" = {
+      # target = aws_eip.main_prod
+      target = module.instances["green"]
+    }
   }
 
   source = "../../../modules/dns_records"
