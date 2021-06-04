@@ -1,6 +1,7 @@
 output "instances" {
   description = "Instances info"
   value       = module.instances
+  sensitive   = true
 }
 
 output "dns_records_sets" {
