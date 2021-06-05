@@ -27,4 +27,5 @@ module "environment" {
   name               = var.name
   public_key         = var.public_key
   backup_bucket_name = "shop-backup-${var.name}"
+  allowed_admin_arns = var.allowed_admin_arns
 }

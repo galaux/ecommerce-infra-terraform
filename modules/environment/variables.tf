@@ -12,3 +12,8 @@ variable "backup_bucket_name" {
   type        = string
   description = "The name of the S3 bucket used to store backup files"
 }
+
+variable "allowed_admin_arns" {
+  type        = list(string)
+  description = "List of ARNs allowed to endorse the admin role"
+}
