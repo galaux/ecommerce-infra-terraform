@@ -22,14 +22,18 @@ variable "instance_type" {
 }
 
 variable "open_ports_ipv4" {
-  type = list(string)
+  type = list(
+    object({
+      from = string
+      to   = string
+  }))
   default = [
-    "21",
-    "22",
-    "25",
-    "80",
-    "443",
-    "22"
+    { from : "21", to : "21" },
+    { from : "22", to : "22" },
+    { from : "25", to : "25" },
+    { from : "80", to : "80" },
+    { from : "443", to : "443" },
+    { from : "22", to : "22" }
   ]
 }
 
