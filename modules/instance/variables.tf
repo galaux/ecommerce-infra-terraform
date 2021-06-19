@@ -33,7 +33,8 @@ variable "open_ports_ipv4" {
     { from : "25", to : "25" },
     { from : "80", to : "80" },
     { from : "443", to : "443" },
-    { from : "22", to : "22" }
+    { from : "22", to : "22" },
+    { from : "30000", to : "30100" }
   ]
 }
 
