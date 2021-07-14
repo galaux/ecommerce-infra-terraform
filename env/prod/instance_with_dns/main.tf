@@ -52,3 +52,13 @@ module "dns_records_sets" {
   zone_base = data.terraform_remote_state.zone_base.outputs.zone_base[each.key]
   target_ip = each.value.target.public_ip
 }
+
+module "dns_records_sets_mailchimp" {
+  source = "../../../modules/dns_records_mailchimp"
+
+  zone_base = data.terraform_remote_state.zone_base.outputs.zone_base["example.com"]
+  mailchimp_dkim_tokens = {
+    "k2._domainkey" = "dkim2.mcsv.net"
+    "k3._domainkey" = "dkim3.mcsv.net"
+  }
+}
