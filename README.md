@@ -1,5 +1,10 @@
 # example Terraform
 
+## Setup AWS switch role:
+
+- [Test](https://signin.aws.amazon.com/switchrole?roleName=admin&account=123456789012&displayName=shop-test)
+- [Prod](https://signin.aws.amazon.com/switchrole?roleName=admin&account=123456789012&displayName=shop-prod)
+
 ## Notes on using different AWS accounts for `test` and `prod`
 
 I've managed to set it up but this complexifies the handling of DNS entries
